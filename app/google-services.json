@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "244138325965",
+    "project_id": "picturesharerbase",
+    "storage_bucket": "picturesharerbase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244138325965:android:08dcfdc45e028efc38f684",
+        "android_client_info": {
+          "package_name": "com.example.picturesharer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFdaDRlcJRDKQpuoJr6O9LtUQxuwR_vv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
