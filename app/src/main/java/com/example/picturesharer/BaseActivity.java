@@ -23,7 +23,7 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(new Intent(this, MapsActivity.class));
                 return true;
             } else if (itemId == R.id.navigation_discover) {
-                // Handle discover action
+                startActivity(new Intent(this, DiscoverActivity.class));
                 return true;
             }
             return false;
