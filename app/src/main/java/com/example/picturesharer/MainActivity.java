@@ -14,12 +14,7 @@ public class MainActivity extends BaseActivity {
         getLayoutInflater().inflate(R.layout.activity_main, findViewById(R.id.container));
 
         Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopup();
-            }
-        });
+        button.setOnClickListener(v -> showPopup());
     }
 
     private void showPopup() {
