@@ -6,27 +6,48 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
+    private BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_share) {
-                startActivity(new Intent(this, MainActivity.class));
+                if (!this.getClass().equals(MainActivity.class)) {
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+                }
                 return true;
             } else if (itemId == R.id.navigation_explore) {
-                startActivity(new Intent(this, MapsActivity.class));
+                if (!this.getClass().equals(MapsActivity.class)) {
+                    startActivity(new Intent(this, MapsActivity.class));
+                    finish();
+                }
                 return true;
             } else if (itemId == R.id.navigation_discover) {
-                startActivity(new Intent(this, DiscoverActivity.class));
+                if (!this.getClass().equals(DiscoverActivity.class)) {
+                    startActivity(new Intent(this, DiscoverActivity.class));
+                    finish();
+                }
                 return true;
             }
             return false;
         });
+
+        // Set the correct tab as selected when the activity is created
+        setSelectedNavigationItem();
+    }
+
+    // Abstract method to be implemented by each child activity
+    protected abstract void setSelectedNavigationItem();
+
+    // Helper method to set the selected item programmatically
+    protected void setBottomNavigationItem(int itemId) {
+        bottomNavigationView.setSelectedItemId(itemId);
     }
 }

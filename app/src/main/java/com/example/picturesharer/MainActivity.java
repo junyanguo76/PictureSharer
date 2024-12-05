@@ -17,6 +17,11 @@ public class MainActivity extends BaseActivity {
         button.setOnClickListener(v -> showPopup());
     }
 
+    @Override
+    protected void setSelectedNavigationItem() {
+        setBottomNavigationItem(R.id.navigation_share);
+    }
+
     private void showPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Connect or Register to continue")

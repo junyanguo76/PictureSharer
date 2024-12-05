@@ -1,6 +1,9 @@
 package com.example.picturesharer;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.FragmentActivity;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -8,19 +11,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.picturesharer.databinding.ActivityMapsBinding;
 
 public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private ActivityMapsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
-        setContentView(R.layout.activity_base); // Ensure this is set to activity_base
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = new SupportMapFragment();
@@ -28,6 +26,11 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
                 .replace(R.id.container, mapFragment)
                 .commit();
         mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    protected void setSelectedNavigationItem() {
+        setBottomNavigationItem(R.id.navigation_explore);
     }
 
     @Override

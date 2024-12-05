@@ -104,10 +104,8 @@ public class Register extends AppCompatActivity {
                             // hide the progress bar
                             progressbar.setVisibility(View.GONE);
 
-                            // if the user created intent to login activity
-                            Intent intent
-                                    = new Intent(Register.this,
-                                    MainActivity.class);
+                            // if the user created intent to SharePostActivity
+                            Intent intent = new Intent(Register.this, SharePostActivity.class);
                             startActivity(intent);
                         }
                         else {

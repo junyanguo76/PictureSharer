@@ -46,16 +46,10 @@ public class Login extends AppCompatActivity {
                 loginUserAccount();
             }
         });
-
-
     }
-
-
-
 
     private void loginUserAccount()
     {
-
         // show the visibility of progress bar to show loading
         progressbar.setVisibility(View.VISIBLE);
 
@@ -99,15 +93,10 @@ public class Login extends AppCompatActivity {
                                     progressbar.setVisibility(View.GONE);
 
                                     // if sign-in is successful
-                                    // intent to home activity
-                                    Intent intent
-                                            = new Intent(Login.this,
-                                            MainActivity.class);
+                                    // intent to SharePostActivity
+                                    Intent intent = new Intent(Login.this, SharePostActivity.class);
                                     startActivity(intent);
-                                }
-
-                                else {
-
+                                } else {
                                     // sign-in failed
                                     Toast.makeText(getApplicationContext(),
                                                     "Login failed!!",
