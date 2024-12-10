@@ -1,8 +1,10 @@
 package com.example.picturesharer;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -52,8 +54,8 @@ public class DiscoverActivity extends BaseActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle possible errors.
+            public void onCancelled(@NonNull DatabaseError error) {
+                // nothing
             }
         });
     }
@@ -71,6 +73,32 @@ public class DiscoverActivity extends BaseActivity {
         authorTextView.setText(post.getAuthor());
         descriptionTextView.setText(post.getDescription());
 
+        photoImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFullScreenImageDialog(post.getPhotoUrl());
+            }
+        });
+
         postsContainer.addView(postView);
+    }
+
+    private void showFullScreenImageDialog(String imageUrl) {
+        Dialog dialog = new Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+        dialog.setContentView(R.layout.dialog_full_screen_image);
+
+        ImageView fullScreenImageView = dialog.findViewById(R.id.fullScreenImageView);
+        Button closeButton = dialog.findViewById(R.id.closeButton);
+
+        Glide.with(this).load(imageUrl).into(fullScreenImageView);
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }

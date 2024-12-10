@@ -2,6 +2,7 @@ package com.example.picturesharer;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,10 +12,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +33,8 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
                 .replace(R.id.container, mapFragment)
                 .commit();
         mapFragment.getMapAsync(this);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("posts");
     }
 
     @Override
@@ -37,9 +46,40 @@ public class MapsActivity extends BaseFragmentActivity implements OnMapReadyCall
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Limerick and move the camera
-        LatLng limerick = new LatLng(52.674804, -8.584677);
-        mMap.addMarker(new MarkerOptions().position(limerick).title("Shannon Riverside Walk").icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin)));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(limerick, 12.0f));
+        // Load posts and add markers
+        loadPostsAndAddMarkers();
+    }
+
+    private void loadPostsAndAddMarkers() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Post post = postSnapshot.getValue(Post.class);
+                    if (post != null) {
+                        double latitude = Double.parseDouble(post.getLatitude());
+                        double longitude = Double.parseDouble(post.getLongitude());
+                        LatLng postLocation = new LatLng(latitude, longitude);
+                        mMap.addMarker(new MarkerOptions()
+                                .position(postLocation)
+                                .title(post.getTitle())
+                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_pin)));
+                    }
+                }
+                // Optionally, move the camera to the first post location
+                if (dataSnapshot.getChildren().iterator().hasNext()) {
+                    Post firstPost = dataSnapshot.getChildren().iterator().next().getValue(Post.class);
+                    if (firstPost != null) {
+                        LatLng firstPostLocation = new LatLng(Double.parseDouble(firstPost.getLatitude()), Double.parseDouble(firstPost.getLongitude()));
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(firstPostLocation, 12.0f));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle possible errors.
+            }
+        });
     }
 }

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -36,11 +37,26 @@ public class SharePostActivity extends AppCompatActivity {
     private StorageReference storageReference;
     private Uri imageUri;
     private FirebaseAuth mAuth;
+    private FloatingActionButton fabReturnHome;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share_post);
+
+        // Set up the return home button
+        fabReturnHome = findViewById(R.id.fabReturnHome);
+        fabReturnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an intent to go back to MainActivity
+                Intent intent = new Intent(SharePostActivity.this, MainActivity.class);
+                // Clear the back stack to prevent returning to this activity
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Close the current activity
+            }
+        });
 
         uploadButton = findViewById(R.id.uploadButton);
         latitudeEditText = findViewById(R.id.latitudeEditText);
@@ -120,6 +136,8 @@ public class SharePostActivity extends AppCompatActivity {
                             databaseReference.child(postId).setValue(post)
                                     .addOnSuccessListener(unused -> {
                                         Toast.makeText(SharePostActivity.this, "Post submitted successfully", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(SharePostActivity.this, DiscoverActivity.class);
+                                        startActivity(intent);
                                         finish();
                                     })
                                     .addOnFailureListener(e -> {

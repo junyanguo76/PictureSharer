@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthResult;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,12 +25,27 @@ public class Register extends AppCompatActivity {
     private Button JumpBtn;
     private ProgressBar progressbar;
     private FirebaseAuth mAuth;
+    private FloatingActionButton fabReturnHome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        // Set up the return home button
+        fabReturnHome = findViewById(R.id.fabReturnHome);
+        fabReturnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create an intent to go back to MainActivity
+                Intent intent = new Intent(Register.this, MainActivity.class);
+                // Clear the back stack to prevent returning to this activity
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish(); // Close the current activity
+            }
+        });
 
         // taking FirebaseAuth instance
         mAuth = FirebaseAuth.getInstance();
