@@ -1,8 +1,9 @@
 {
   "project_info": {
     "project_number": "244138325965",
+    "firebase_url": "https://picturesharerbase-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "picturesharerbase",
-    "storage_bucket": "picturesharerbase.appspot.com"
+    "storage_bucket": "picturesharerbase.firebasestorage.app"
   },
   "client": [
     {

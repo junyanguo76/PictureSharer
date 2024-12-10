@@ -64,13 +64,11 @@ public class DiscoverActivity extends BaseActivity {
         ImageView photoImageView = postView.findViewById(R.id.photoImageView);
         TextView titleTextView = postView.findViewById(R.id.titleTextView);
         TextView authorTextView = postView.findViewById(R.id.authorTextView);
-        TextView locationTextView = postView.findViewById(R.id.locationTextView);
         TextView descriptionTextView = postView.findViewById(R.id.descriptionTextView);
 
         Glide.with(this).load(post.getPhotoUrl()).into(photoImageView);
         titleTextView.setText(post.getTitle());
         authorTextView.setText(post.getAuthor());
-        locationTextView.setText(post.getLocation());
         descriptionTextView.setText(post.getDescription());
 
         postsContainer.addView(postView);

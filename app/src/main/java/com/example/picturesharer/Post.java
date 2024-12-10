@@ -1,48 +1,62 @@
 package com.example.picturesharer;
 
 public class Post {
-    private String title;
-    private String author;
-    private String location;
-    private String description;
+    private String postId;
     private String photoUrl;
+    private String latitude;
+    private String longitude;
+    private String description;
+    private String author;
+    private String title;
 
-    // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     public Post() {
+        // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public Post(String title, String author, String location, String description, String photoUrl) {
-        this.title = title;
+    public Post(String postId, String photoUrl, String latitude, String longitude, String description, String author, String title) {
+        this.postId = postId;
+        this.photoUrl = photoUrl;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.description = description;
         this.author = author;
-        this.location = location;
-        this.description = description;
+        this.title = title;
+    }
+
+    public Post(String postId, String photoUrl, String latitude, String longitude, String description, String author) {
+        this.postId = postId;
         this.photoUrl = photoUrl;
-    }
-
-    public Post(String postId, String photoUrl, String location, String description) {
-        this.title = postId;
-        this.photoUrl = photoUrl;
-        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.description = description;
+        this.author = author;
+        this.title = "Untitled Post"; // Default title if not provided
+    }
+    public String getPostId() {
+        return postId;
     }
 
-    public String getTitle() {
-        return title;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getLatitude() {
+        return latitude;
     }
 
-    public String getLocation() {
-        return location;
+    public String getLongitude() {
+        return longitude;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getTitle() {
+        return title;
     }
 }
